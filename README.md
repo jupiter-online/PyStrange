@@ -39,6 +39,9 @@ If on the other hand an attractor has been found, you will see a success message
 ```
 Random attractor 2 of 20: printing attractor LRFZJHFWCXRO
 ```
+## Motto
+The official motto of PyStrange:
+>I am strangely attracted to strangely attractive strange attractors.
 ## Images
 These images were created with PyStrange.
 ![alt text](https://github.com/jupiter-online/PyStrange/blob/master/images/Quadratic%20Map%20Attractor%20FXYBMTPHKDBA.png "Quadratic Map Attractor FXYBMTPHKDBA")
