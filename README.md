@@ -1,5 +1,5 @@
 # PyStrange
-PyStrange is a strange attractor generator. The user can search for random attractors and plot them with Matplotlib. PyStrange can be used in **Random Search Mode** or **Single Search Mode**
+PyStrange is a strange attractor generator. The user can search for random attractors and plot them with Matplotlib. A detailed German description of this project can be found on my [website](http://jupiter-online.net/projekt-pystrange/). PyStrange can be used in **Random Search Mode** or **Single Search Mode**.
 ## Rquirements
 PyStrange is based on Python 3. It requires the Python libraries **Numpy** and **Matplotlib**.
 ## Random Search Mode
