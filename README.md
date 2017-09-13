@@ -30,14 +30,16 @@ Try to find one attractor using the parameter set "ABCDEFGHIJKL". Calculate 5000
 python3 pystrange.py -num_points 50000 -co_str 'ABCDEFGHIJKL'
 ```
 ## Output
-There are two possible outputs of the program. Many parameter sets will not create an attractor. In this case the output will look something like this:
+There are four possible outputs of the program. Many parameter sets will not create an attractor. In this case the output will look something like this:
 ```
 Random attractor 1 of 20: attractor TLWENEDBKPXJ out of bounds at itertation 2 - 0.8719432 -3.1838048
+Random attractor 6089 of 10000: attractor MISLIDUYKBSJ fixed at iteration 21 - 1.91185766107e-06 7.22455406388e-07
+Random attractor 9450 of 10000: attractor QMKYXYJQTZAJ number of different values: x[2] y[2]
 ```
 In this case the program will continue with the next (random) parameter set. 
-If on the other hand an attractor has been found, you will see a success message:
+If, on the other hand, an attractor has been found, you will see a success message:
 ```
-Random attractor 2 of 20: printing attractor LRFZJHFWCXRO
+Random attractor 9464 of 10000: attractor LPOZDXMTYIWB saved to file
 ```
 ## Motto
 The official motto of PyStrange:
