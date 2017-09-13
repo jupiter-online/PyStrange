@@ -75,28 +75,50 @@ def get_attractor(co_str, num_points, subtitle):
 
     # calculate all x and y coordinates
     for i in range(num_points-1):
-        dx, dy = qardratic_map(x[i], y[i], c)
-        x[i + 1] = dx
-        y[i + 1] = dy
-
+        x_cur, y_cur = x[i], y[i]
+        x_new, y_new = qardratic_map(x_cur, y_cur, c)
+        x[i + 1] = x_new
+        y[i + 1] = y_new
+        diffx = abs(x_cur - x_new)
+        diffy = abs(y_cur - y_new)
+        
+        # calculate the number of different values
+        # for the last 100 iterations
+        # if less than 50 -> abort
+        if i == 200:
+            lastx = np.round(x[i-100:i],3)
+            lasty = np.round(y[i-100:i],3)
+            histx, binx = np.histogram(lastx, len(lastx))
+            histy, biny = np.histogram(lasty, len(lasty))
+            diff_valx = np.greater(histx, 0).astype(int).sum() 
+            diff_valy = np.greater(histy, 0).astype(int).sum() 
+            if diff_valx < 50 and diff_valy < 50:
+                print('attractor {} number of different values: x[{}] y[{}]'.format(co_str, diff_valx, diff_valy))
+                return False
+        
+        # values reached fixed point -> abort
+        if diffx < 1e-6 or diffy < 1e-6:
+            print('attractor', co_str, 'fixed at iteration', i, '-', diffx, diffy)
+            return False
+        
         # values out of bounds -> abort
-        if abs(x[i]) > 2 or abs(y[i]) > 2:
+        if abs(x_new) > 2 or abs(y_new) > 2:
             print('attractor', co_str, 'out of bounds at itertation', i, '-', x[i], y[i])
             return False
 
     # draw scatter plot
-    plt.scatter(x, y, c='b', marker='.', s=0.1)
+    plt.scatter(x[10:], y[10:], c='b', marker='.', s=0.1)
 
     # label diagram
     plt.xlabel("X Axis")
     plt.ylabel("Y Axis")
     plt.title("Quadratic Map Attractor " + co_str + '\n' + subtitle)
 
-    # status report
-    print('printing attractor {} '.format(co_str))
-
     # save image
     plt.savefig('Quadratic Map Attractor ' + co_str + '.png')
+    
+    # status report
+    print('attractor {} saved to file'.format(co_str))
 
     # delete current plot
     plt.cla()
@@ -110,17 +132,14 @@ def check_user_input_random_mode(num, num_points):
     if num < 1:
         sys.exit('Error: num must be at least 1')
 
-    if num_points < 1:
-        sys.exit('Error: num_points must be at least 1')
+    if num_points < 100:
+        sys.exit('Error: num_points must be at least 100')
 
 
 # check user input for errors
 def check_user_input_single_mode(num_points, co_str):
-    if num_points < 1:
-        sys.exit('Error: num_points must be at least 1')
-
-    if len(co_str) != 12:
-        sys.exit('Error: co_str must be of length 12')
+    if num_points < 100:
+        sys.exit('Error: num_points must be at least 100')
 
     if re.match(r'([A-Z]{12})', co_str) is None:
         sys.exit('Error: Only capital letters are allowed for co_str')
