@@ -435,7 +435,7 @@ def main():
                         help='string for subtitle: only available with "-o png", default: "created with PyStrange"')
     parser.add_argument('-s', '--string', type=str, default='', 
                         help='parameter string: string with 12 or 30 capital letters, default: "", "-n" will be ignored')
-    parser.add_argument('-o', '--output', type=str, default='png', nargs='*',
+    parser.add_argument('-o', '--output', type=str, default=['png',], nargs='*',
                         help='output format: "png" ( via matplotlib) and/or "html" (via plotly) and/or "obj" (wavefront), default: "png"')
     parser.add_argument('-j', '--jump', type=int, default=1, 
                         help='plot every J\'th point: integer >= 1, default: 1')
@@ -463,7 +463,7 @@ def main():
         check_num_guesses(args.number)
         get_random_attractors(args.number, args.points, args.title, args.output, args.jump, args.first, args.m)
 
-        
+
 # execute only if run as a script
 if __name__ == "__main__":
     main()
