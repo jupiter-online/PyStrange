@@ -54,6 +54,8 @@ The official motto of PyStrange:
 >I am strangely attracted to strangely attractive strange attractors.
 ## Images
 These images were created with PyStrange.
+![alt text](https://github.com/jupiter-online/PyStrange/blob/master/images/3D%20Attractor%20OUNBOAZRBZSWNMSDZTMEHQPRAWHDTG%2050000%20Vertices.png "Quadratic Map Attractor FXYBMTPHKDBA")
+
 ![alt text](https://github.com/jupiter-online/PyStrange/blob/master/images/Quadratic%20Map%20Attractor%20FXYBMTPHKDBA.png "Quadratic Map Attractor FXYBMTPHKDBA")
 
 ![alt text](https://github.com/jupiter-online/PyStrange/blob/master/images/Quadratic%20Map%20Attractor%20EWUFTYHDGDOQ.png "Quadratic Map Attractor EWUFTYHDGDOQ")
