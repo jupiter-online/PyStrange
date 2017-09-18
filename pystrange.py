@@ -366,7 +366,7 @@ def check_sieve(jump):
 
 # check user input: plot offset
 def check_first_point(first):
-    if first < 1:
+    if first < 0:
         sys.exit('error: start index for plotting must be at least 0')    
 
 
