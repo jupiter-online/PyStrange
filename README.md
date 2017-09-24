@@ -5,12 +5,12 @@ PyStrange is based on Python 3. It requires the Python libraries **Numpy**, **Ma
 ## Random Search Mode
 Use PyStrange to plot 2D or 3D attractors in Random Search
 Mode or Single Search Mode. You can choose between two quadratic
-and two cubic maps ("2d_12", "3d_30", "2d_20", "3d_60").
+and two cubic maps/flows and one quartic map/flow ("2d_12", "3d_30", "2d_20", "3d_60", "3d_105").
 It is recommended to use large values for option "-n", especially
 if maps with 30 or 60 coefficients are used.
 ## Single Search Mode
 To use Single Search Mode you can use a specific parameter set (option "-s") in the form
-of a character string (12, 20, 30 or 60 capital letters).
+of a character string (12, 20, 30, 60 or 105 capital letters).
 Parameters for the coefficients of the quadratic and cubic functions
 range from -1.2 (letter A) to + 1.3 (Letter Z).
 If option "-s" is passed, option "-n" will be ignored.
@@ -23,16 +23,16 @@ You can specify multiple output formats, for example "-o png html".
 Set the number of points to calculated with option "-p".
 You can specify to plot only every n'th point with option "-j".
 You can start plotting at a certain index with option "-f".
-You can define a subtitle with option "-t" (only available for "png" output)
+You can define a time interval with option "-t" (only available for 3D output)
 ## Help
 Use **-h** or **--help** to show the help text.
 ```
 python3 pystrange.py -h
 ```
 ## Usage
-All arguments are optional except m. This parameter specifies the type of map ("2d_12", "3d_30", "2d_20", "3d_60").
+All arguments are optional except m. This parameter specifies the type of map/flow ("2d_12", "3d_30", "2d_20", "3d_60", "3d_105").
 ```
-python3 pystrange.py [-h] [-n NUMBER] [-p POINTS] [-t TITLE] [-s STRING]
+python3 pystrange.py [-h] [-n NUMBER] [-p POINTS] [-t TIME] [-s STRING]
                     [-o [OUTPUT [OUTPUT ...]]] [-j JUMP] [-f FIRST]
                     m
 ```
@@ -48,6 +48,10 @@ python3 pystrange.py  3d_60 -n 100 -o png html
 Try to find one attractor using the parameter set "ABCDEFGHIJKL", calculate 50000 points, start plotting at index 15000,
 ```
 python3 pystrange.py 2d_12  -p 50000 -s AGWXDCUKEANF -f 15000
+```
+Try to find 1000 random attracors with 105 coeffitions in flow mode, time intervall 0.1, output png + html
+```
+python3 pystrange.py 3d_105 -t 0.1 -n 1000 -o png html
 ```
 ## Motto
 The official motto of PyStrange:
