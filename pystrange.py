@@ -39,7 +39,7 @@ description=\
 '''
 Use PyStrange to plot 2D or 3D attractors in Random Search
 Mode or Single Search Mode. You can choose between two quadratic
-and two cubic maps ("2d_12", "3d_30", "2d_20", "3d_60").
+and two cubic maps/flows and one quartic map/flow ("2d_12", "3d_30", "2d_20", "3d_60", "3d_105").
 It is recommended to use large values for option "-n", especially
 if maps with 30 or 60 coefficients are used.
 To use Single Search Mode you can use a specific parameter set (option "-s") in the form
@@ -55,7 +55,7 @@ You can specify multiple output formats, for example "-o png html".
 Set the number of points to calculated with option "-p".
 You can specify to plot only every n'th point with option "-j".
 You can start plotting at a certain index with option "-f".
-You can define a subtitle with option "-t" (only available for "png" output)
+You can define a time intervall with option "-t" (only available for 3D output)
 '''
 
 epilog=\
@@ -95,7 +95,7 @@ def map_2d_20(x, y, c):
     return x_next, y_next
 
 
-# calculate coordinates of a quadratic map with 30 coefficients (3 dimensions)
+# calculate coordinates of a quadratic map/flow with 30 coefficients (3 dimensions)
 def map_3d_30(x, y, z, c):
 
     x_next = c[0] + c[1]*x + c[2]*x*x + c[3]*x*y + c[4]*x*z \
@@ -108,7 +108,7 @@ def map_3d_30(x, y, z, c):
     return x_next, y_next, z_next
 
 
-# calculate coordinates of a cubic map with 60 coefficients (3 dimensions)
+# calculate coordinates of a cubic map/flow with 60 coefficients (3 dimensions)
 def map_3d_60(x, y, z, c):
 
     x_next = c[0] + c[1]*x + c[2]*x*x + c[3]*x*x*x + c[4]*x*x*y \
@@ -123,6 +123,34 @@ def map_3d_60(x, y, z, c):
              + c[45]*x*x*z + c[46]*x*y + c[47]*x*y*y + c[48]*x*y*z + c[49]*x*z \
              + c[50]*x*z*z + c[51]*y + c[52]*y*y + c[53]*y*y*y + c[54]*y*y*z \
              + c[55]*y*z + c[56]*y*z*z + c[57]*z + c[58]*z*z + c[59]*z*z*z
+
+    return x_next, y_next, z_next
+
+
+# calculate coordinates of a quartic map/flow with 105 coefficients (3 dimensions)
+def map_3d_105(x, y, z, c):
+
+    x_next = c[0] + c[1]*x + c[2]*x*x +c[3]*x*x*x + c[4]*x*x*x*x + c[5]*x*x*x*y \
+             + c[6]*x*x*x*z + c[7]*x*x*y + c[8]*x*x*y*y  + c[9]*x*x*y*z + c[10]*x*x*z \
+             + c[11]*x*x*z*z + c[12]*x*y + c[13]*x*y*y + c[14]*x*y*y*y + c[15]*x*y*y*z \
+             + c[16]*x*y*z + c[17]*x*y*z*z + c[18]*x*z + c[19]*x*z*z + c[20]*x*z*z*z \
+             + c[21]*y + c[22]*y*y + c[23]*y*y*y + c[24]*y*y*y*y + c[25]*y*y*y*z \
+             + c[26]*y*y*z + c[27]*y*y*z*z + c[28]*y*z + c[29]*y*z*z + c[30]*y*z*z*z \
+             + c[31]*z + c[32]*z*z + c[33]*z*z*z + c[34]*z*z*z*z
+    y_next = c[35] + c[36]*x + c[37]*x*x +c[38]*x*x*x + c[39]*x*x*x*x + c[40]*x*x*x*y \
+             + c[41]*x*x*x*z + c[42]*x*x*y + c[43]*x*x*y*y  + c[44]*x*x*y*z + c[45]*x*x*z \
+             + c[46]*x*x*z*z + c[47]*x*y + c[48]*x*y*y + c[49]*x*y*y*y + c[50]*x*y*y*z \
+             + c[51]*x*y*z + c[52]*x*y*z*z + c[53]*x*z + c[54]*x*z*z + c[55]*x*z*z*z \
+             + c[56]*y + c[57]*y*y + c[58]*y*y*y + c[59]*y*y*y*y + c[60]*y*y*y*z \
+             + c[61]*y*y*z + c[62]*y*y*z*z + c[63]*y*z + c[64]*y*z*z + c[65]*y*z*z*z \
+             + c[66]*z + c[67]*z*z + c[68]*z*z*z + c[69]*z*z*z*z
+    z_next = c[70] + c[71]*x + c[72]*x*x +c[73]*x*x*x + c[74]*x*x*x*x + c[75]*x*x*x*y \
+             + c[76]*x*x*x*z + c[77]*x*x*y + c[78]*x*x*y*y  + c[79]*x*x*y*z + c[80]*x*x*z \
+             + c[81]*x*x*z*z + c[82]*x*y + c[83]*x*y*y + c[84]*x*y*y*y + c[85]*x*y*y*z \
+             + c[86]*x*y*z + c[87]*x*y*z*z + c[88]*x*z + c[89]*x*z*z + c[90]*x*z*z*z \
+             + c[91]*y + c[92]*y*y + c[93]*y*y*y + c[94]*y*y*y*y + c[95]*y*y*y*z \
+             + c[96]*y*y*z + c[97]*y*y*z*z + c[98]*y*z + c[99]*y*z*z + c[100]*y*z*z*z \
+             + c[101]*z + c[102]*z*z + c[103]*z*z*z + c[104]*z*z*z*z
 
     return x_next, y_next, z_next
 
@@ -242,7 +270,7 @@ def check_histogram(dim, x, y, z, parameter_string, threshold=50):
 
 
 # search and plot 2d attractor
-def get_attractor_2d(parameter_string, num_points, subtitle_string, output_modes, sieve, plot_offset, map_function):
+def get_attractor_2d_map(parameter_string, num_points, subtitle_string, output_modes, sieve, plot_offset, map_function):
 
     x = np.empty(num_points + plot_offset)
     y = np.empty(num_points + plot_offset)
@@ -284,8 +312,55 @@ def get_attractor_2d(parameter_string, num_points, subtitle_string, output_modes
     return True
 
 
-# search and plot 3d attractor
-def get_attractor_3d(parameter_string, num_points, subtitle_string, output_modes, sieve, plot_offset, map_function):
+# search and plot 3d attractor flow mode
+def get_attractor_3d_flow(parameter_string, time, num_points, subtitle_string, output_modes, sieve, plot_offset, map_function):
+
+    x = np.empty(num_points + plot_offset)
+    y = np.empty(num_points + plot_offset)
+    z = np.empty(num_points + plot_offset)
+
+    c = get_coefficient(parameter_string, coeff)
+
+    # initialize start values
+    x[0], y[0], z[0] = 0.1, 0.1, 0.1
+
+    # calculate all x and y coordinates
+    for i in range(num_points + plot_offset - 1):
+
+        x_cur, y_cur, z_cur = x[i], y[i], z[i]
+        x_new, y_new, z_new = map_function(x_cur, y_cur, z_cur, c)
+        x_new = x_cur + time*x_new
+        y_new = y_cur + time*y_new
+        z_new = z_cur + time*z_new
+
+        x[i + 1], y[i + 1], z[i + 1] = x_new, y_new, z_new
+
+        # values out of bounds -> abort
+        if abs(x_new) > 10 or abs(y_new) > 10 or abs(z_new) > 10:
+            print('attractor', parameter_string, 'out of bounds at iteration', i, '-', x_new, y_new, z_new)
+            return False
+
+        # check histogram of points at index 100 to 199
+        if i == 300:
+            if check_histogram(3, x[i-100:i], y[i-100:i], z[i-100:i], parameter_string) == False:
+                return False
+
+    # plot 3d attractor
+    for output_mode in output_modes:
+        plot_point_cloud(x[plot_offset::sieve],
+                        y[plot_offset::sieve],
+                        z[plot_offset::sieve],
+                        '3d',
+                        output_mode,
+                        parameter_string,
+                        subtitle_string)
+
+    # return success
+    return True
+
+
+# search and plot 3d attractor map mode
+def get_attractor_3d_map(parameter_string, num_points, subtitle_string, output_modes, sieve, plot_offset, map_function):
 
     x = np.empty(num_points + plot_offset)
     y = np.empty(num_points + plot_offset)
@@ -348,7 +423,7 @@ def check_output_mode(output):
 
 # check user input: 2d/3d maps
 def check_map_mode(m):
-    if re.match(r'((3d_30)|(3d_60)|(2d_12)|(2d_20))', m) is None:
+    if re.match(r'((3d_30)|(3d_60)|(3d_105)|(2d_12)|(2d_20))', m) is None:
         sys.exit('error: map mode must be "3d_30" or "2d_12" or "2d_20"')  
 
 
@@ -370,30 +445,95 @@ def check_first_point(first):
         sys.exit('error: start index for plotting must be at least 0')    
 
 
+# check user input: output modes
 def check_output_modes(outputs):
     for i in outputs:
         check_output_mode(i)
 
+
+# check user input: time
+def check_time(time):
+    if not time > 0:
+        sys.exit('error: time must be bigger than 0') 
+
+
+# check user input: mode vs string
+def check_string_length(m, s):
+
+    m_length = int(m[3:])
+    s_length = len(s)
+    if m_length != s_length:
+        sys.exit('error: length of string must be "{}" for mode "{}"'.format(m_length, m)) 
+
+
 # create random attractors
-def get_random_attractors(num_guesses, num_points, subtitle_string, output_modes, sieve, plot_offset, m):
+def get_attractors(num_guesses, parameter_string, num_points, time, output_modes, sieve, plot_offset, m):
     found = 0
     map = get_map_function(m)
+    subtitle_string = 'created with PyStrange'
     
+    # 2d attractor(s)
     if m[0:2] == '2d':
-        # search for random attractors
-        for i in range(num_guesses):
-            print('Random attractor {} of {}:'.format(i + 1, num_guesses), end=' ')
-            if get_attractor_2d(get_random_string(coeff, int(m[3:])), num_points, 
+        
+        if time != None:
+            print('ignoring time intervall for 2D attractors')
+
+        # single search mode
+        if parameter_string != '':
+            print('Search for attractor {}:'.format(parameter_string), end=' ')
+            if get_attractor_2d_map(parameter_string, num_points, 
                                 subtitle_string, output_modes, sieve, plot_offset, map):
-                found += 1
-                
+                found += 1  
+
+        # random search mode
+        else:
+            # search for random attractors
+            for i in range(num_guesses):
+                print('Random attractor {} of {}:'.format(i + 1, num_guesses), end=' ')
+                if get_attractor_2d_map(get_random_string(coeff, int(m[3:])), num_points, 
+                                    subtitle_string, output_modes, sieve, plot_offset, map):
+                    found += 1
+
+    # 3d attractor(s)            
     elif m[0:2] == '3d':
-        # search for random attractors
-        for i in range(num_guesses):
-            print('Random attractor {} of {}:'.format(i + 1, num_guesses), end=' ')
-            if get_attractor_3d(get_random_string(coeff, int(m[3:])), num_points, 
-                                subtitle_string, output_modes, sieve, plot_offset, map):
-                found += 1        
+
+        # single search mode
+        if parameter_string != '':
+
+            # map mode
+            if time == None:
+                print('Search for attractor {}:'.format(parameter_string), end=' ')
+                if get_attractor_3d_map(parameter_string, num_points, 
+                                    subtitle_string, output_modes, sieve, plot_offset, map):
+                    found += 1
+
+            # flow mode
+            else:
+                print('Search for attractor {}:'.format(parameter_string), end=' ')
+                if get_attractor_3d_flow(parameter_string, time, num_points, 
+                                    subtitle_string, output_modes, sieve, plot_offset, map):
+                    found += 1
+
+        # random search mode
+        else:
+
+            # map mode
+            if time == None:
+                # search for random attractors
+                for i in range(num_guesses):
+                    print('Random attractor {} of {}:'.format(i + 1, num_guesses), end=' ')
+                    if get_attractor_3d_map(get_random_string(coeff, int(m[3:])), num_points, 
+                                        subtitle_string, output_modes, sieve, plot_offset, map):
+                        found += 1
+
+            # flow mode
+            else:
+                # search for random attractors
+                for i in range(num_guesses):
+                    print('Random attractor {} of {}:'.format(i + 1, num_guesses), end=' ')
+                    if get_attractor_3d_flow(get_random_string(coeff, int(m[3:])), time, num_points, 
+                                        subtitle_string, output_modes, sieve, plot_offset, map):
+                        found += 1                        
 
     # print number of found attractors
     if found == 0:
@@ -408,8 +548,10 @@ def get_random_attractors(num_guesses, num_points, subtitle_string, output_modes
 def get_map_function(m):
     if m == '3d_30':
         return map_3d_30
-    elif m== '3d_60':
+    elif m == '3d_60':
         return map_3d_60
+    elif m == '3d_105':
+        return map_3d_105
     elif m == '2d_12':
         return map_2d_12 
     elif m == '2d_20':
@@ -431,8 +573,8 @@ def main():
                         help='number of guesses: integer > 0, default: 100')
     parser.add_argument('-p', '--points', type=int, default=50000, 
                         help='number of points for plot: integer >= 500, default: 50000')
-    parser.add_argument('-t', '--title', type=str, default='created with PyStrange', 
-                        help='string for subtitle: only available with "-o png", default: "created with PyStrange"')
+    parser.add_argument('-t', '--time', type=float,
+                        help='time intervall for flow mode, recommended value: 0.1, ignored for 2D Attractors')
     parser.add_argument('-s', '--string', type=str, default='', 
                         help='parameter string: string with 12 or 30 capital letters, default: "", "-n" will be ignored')
     parser.add_argument('-o', '--output', type=str, default=['png',], nargs='*',
@@ -452,17 +594,16 @@ def main():
     check_sieve(args.jump)
     check_first_point(args.first)
 
-    # switch search mode (single or random)
-    if args.string != '':
-        check_parameter_string(args.string)
-        if args.m[:2] == '2d':
-            get_attractor_2d(args.string, args.points, args.title, args.output, args.jump, args.first, get_map_function(args.m))
-        else:
-            get_attractor_3d(args.string, args.points, args.title, args.output, args.jump, args.first, get_map_function(args.m))
-    else:
-        check_num_guesses(args.number)
-        get_random_attractors(args.number, args.points, args.title, args.output, args.jump, args.first, args.m)
+    if args.time != None:
+        check_time(args.time)
 
+    if args.string != '':
+        check_string_length(args.m, args.string)
+        args.number = 1
+
+    # search for attractor(s)
+    get_attractors(args.number, args.string, args.points, args.time, args.output, args.jump, args.first, args.m)
+    
 
 # execute only if run as a script
 if __name__ == "__main__":
