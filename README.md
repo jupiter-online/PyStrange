@@ -1,5 +1,5 @@
 # PyStrange
-PyStrange is a (strange) attractor generator. The user can search for random attractors and plot them with Matplotlib, Plotly or export them as wavefront file. A detailed German description of this project can be found on my [website](http://jupiter-online.net/projekt-pystrange/). A Gallery with 90  Examples (so far) can be found [here](http://pystrange.jupiter-online.net/). PyStrange can be used in **Random Search Mode** or **Single Search Mode**.
+PyStrange is a (strange) attractor generator. The user can search for random attractors and plot them with Matplotlib, Plotly or export them as wavefront file. A detailed German description of this project can be found on my [website](http://jupiter-online.net/projekt-pystrange/). A Gallery with 90 2D Examples (so far) can be found [here](http://pystrange.jupiter-online.net/). PyStrange can be used in **Random Search Mode** or **Single Search Mode**.
 ## Rquirements
 PyStrange is based on Python 3. It requires the Python libraries **Numpy**, **Matplotlib** and **Plotly**.
 ## Random Search Mode
@@ -57,12 +57,15 @@ python3 pystrange.py 3d_105 -t 0.1 -n 1000 -o png html
 The official motto of PyStrange:
 >I am strangely attracted to strangely attractive strange attractors.
 ## Images
-These images were created with PyStrange.
-![alt text](https://github.com/jupiter-online/PyStrange/blob/master/images/3D%20Attractor%20OUNBOAZRBZSWNMSDZTMEHQPRAWHDTG%2050000%20Vertices.png "Quadratic Map Attractor FXYBMTPHKDBA")
+These images were created with PyStrange (and Blender).
 
-![alt text](https://github.com/jupiter-online/PyStrange/blob/master/images/Quadratic%20Map%20Attractor%20FXYBMTPHKDBA.png "Quadratic Map Attractor FXYBMTPHKDBA")
+![Attractor](https://github.com/jupiter-online/PyStrange/blob/master/images/Seltsamer%20Attraktor%202.jpg "3D Attractor")
 
-![alt text](https://github.com/jupiter-online/PyStrange/blob/master/images/Quadratic%20Map%20Attractor%20EWUFTYHDGDOQ.png "Quadratic Map Attractor EWUFTYHDGDOQ")
+![Attractor](https://github.com/jupiter-online/PyStrange/blob/master/images/3D%20Attractor%20OUNBOAZRBZSWNMSDZTMEHQPRAWHDTG%2050000%20Vertices.png "Quadratic Map Attractor FXYBMTPHKDBA")
 
-![alt text](https://github.com/jupiter-online/PyStrange/blob/master/images/Quadratic%20Map%20Attractor%20SJDRDCTQGMSE.png "Quadratic Map Attractor SJDRDCTQGMSE")
+![Attractor](https://github.com/jupiter-online/PyStrange/blob/master/images/Quadratic%20Map%20Attractor%20FXYBMTPHKDBA.png "Quadratic Map Attractor FXYBMTPHKDBA")
+
+![Attractor](https://github.com/jupiter-online/PyStrange/blob/master/images/Quadratic%20Map%20Attractor%20EWUFTYHDGDOQ.png "Quadratic Map Attractor EWUFTYHDGDOQ")
+
+![Attractor](https://github.com/jupiter-online/PyStrange/blob/master/images/Quadratic%20Map%20Attractor%20SJDRDCTQGMSE.png "Quadratic Map Attractor SJDRDCTQGMSE")
 
