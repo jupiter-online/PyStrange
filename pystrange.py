@@ -31,6 +31,7 @@ import re
 from mpl_toolkits.mplot3d import Axes3D
 import plotly
 import plotly.graph_objs as go
+from scipy.interpolate import InterpolatedUnivariateSpline
 
 # use syle seaborn
 plt.style.use('seaborn')
@@ -203,7 +204,7 @@ def plot_point_cloud(px, py, pz, dim, output_mode, parameter_string, subtitle_st
 
         elif dim=='3d':
 
-            trace = go.Scatter3d(x=px, y=py, z=pz, mode='markers', marker=dict(size=1, colorscale='Viridis', opacity=1.0))
+            trace = go.Scatter3d(x=px, y=py, z=pz, marker=dict(size=1, colorscale='Viridis', opacity=1.0), line=dict(color='#1f77b4', width=1))
             layout = go.Layout(margin=dict(l=0, r=0, b=0, t=0))
             fig = go.Figure(data=[trace], layout=layout)
             plotly.offline.plot(fig, auto_open=False, filename='3D Attractor {} {} Vertices.html'.format(parameter_string, len(px)))
@@ -313,7 +314,7 @@ def get_attractor_2d_map(parameter_string, num_points, subtitle_string, output_m
 
 
 # search and plot 3d attractor flow mode
-def get_attractor_3d_flow(parameter_string, time, num_points, subtitle_string, output_modes, sieve, plot_offset, map_function):
+def get_attractor_3d_flow(parameter_string, time, num_points, subtitle_string, output_modes, sieve, plot_offset, map_function, interpolate):
 
     x = np.empty(num_points + plot_offset)
     y = np.empty(num_points + plot_offset)
@@ -345,11 +346,20 @@ def get_attractor_3d_flow(parameter_string, time, num_points, subtitle_string, o
             if check_histogram(3, x[i-100:i], y[i-100:i], z[i-100:i], parameter_string) == False:
                 return False
 
+    t = np.arange(num_points + plot_offset)
+    
+    # now let's refine it to 100 points:
+    t2 = np.linspace(t.min(), t.max(), num_points*interpolate + plot_offset)  
+
+    x2 = InterpolatedUnivariateSpline(t, x)(t2)
+    y2 = InterpolatedUnivariateSpline(t, y)(t2)
+    z2 = InterpolatedUnivariateSpline(t, z)(t2)
+    
     # plot 3d attractor
     for output_mode in output_modes:
-        plot_point_cloud(x[plot_offset::sieve],
-                        y[plot_offset::sieve],
-                        z[plot_offset::sieve],
+        plot_point_cloud(x2[plot_offset::sieve],
+                        y2[plot_offset::sieve],
+                        z2[plot_offset::sieve],
                         '3d',
                         output_mode,
                         parameter_string,
@@ -411,8 +421,8 @@ def check_num_guesses(number):
 
 # check user input: number of points for plotting
 def check_num_points(points):
-    if points < 500:
-        sys.exit('error: number of points must be at least 500')
+    if points < 1:
+        sys.exit('error: number of points must be at least 1')
 
 
 # check user input: output file format
@@ -466,8 +476,14 @@ def check_string_length(m, s):
         sys.exit('error: length of string must be "{}" for mode "{}"'.format(m_length, m)) 
 
 
+# check user input: interpolation factor
+def check_interpolate(interpolate):
+    if interpolate < 1:
+        sys.exit('error: interpolate must be bigger than 0') 
+
+
 # create random attractors
-def get_attractors(num_guesses, parameter_string, num_points, time, output_modes, sieve, plot_offset, m):
+def get_attractors(num_guesses, parameter_string, num_points, time, output_modes, sieve, plot_offset, m, interpolate):
     found = 0
     map = get_map_function(m)
     subtitle_string = 'created with PyStrange'
@@ -511,7 +527,7 @@ def get_attractors(num_guesses, parameter_string, num_points, time, output_modes
             else:
                 print('Search for attractor {}:'.format(parameter_string), end=' ')
                 if get_attractor_3d_flow(parameter_string, time, num_points, 
-                                    subtitle_string, output_modes, sieve, plot_offset, map):
+                                    subtitle_string, output_modes, sieve, plot_offset, map, interpolate):
                     found += 1
 
         # random search mode
@@ -532,7 +548,7 @@ def get_attractors(num_guesses, parameter_string, num_points, time, output_modes
                 for i in range(num_guesses):
                     print('Random attractor {} of {}:'.format(i + 1, num_guesses), end=' ')
                     if get_attractor_3d_flow(get_random_string(coeff, int(m[3:])), time, num_points, 
-                                        subtitle_string, output_modes, sieve, plot_offset, map):
+                                        subtitle_string, output_modes, sieve, plot_offset, map, interpolate):
                         found += 1                        
 
     # print number of found attractors
@@ -571,8 +587,8 @@ def main():
     # define optional arguments
     parser.add_argument('-n', '--number', type=int, default=100, 
                         help='number of guesses: integer > 0, default: 100')
-    parser.add_argument('-p', '--points', type=int, default=50000, 
-                        help='number of points for plot: integer >= 500, default: 50000')
+    parser.add_argument('-p', '--points', type=int, default=20000, 
+                        help='number of points for plot: integer > 0, default: 20000')
     parser.add_argument('-t', '--time', type=float,
                         help='time intervall for flow mode, recommended value: 0.1, ignored for 2D Attractors')
     parser.add_argument('-s', '--string', type=str, default='', 
@@ -583,6 +599,8 @@ def main():
                         help='plot every J\'th point: integer >= 1, default: 1')
     parser.add_argument('-f', '--first', type=int, default=200, 
                         help='start plotting at index F: integer >= 0, default: 200')    
+    parser.add_argument('-i', '--interpolate', type=int, default=1, 
+                        help='interploation factor, default: 1') 
 
     # parse arguments
     args = parser.parse_args()
@@ -593,6 +611,7 @@ def main():
     check_map_mode(args.m)
     check_sieve(args.jump)
     check_first_point(args.first)
+    check_interpolate(args.interpolate)
 
     if args.time != None:
         check_time(args.time)
@@ -602,7 +621,7 @@ def main():
         args.number = 1
 
     # search for attractor(s)
-    get_attractors(args.number, args.string, args.points, args.time, args.output, args.jump, args.first, args.m)
+    get_attractors(args.number, args.string, args.points, args.time, args.output, args.jump, args.first, args.m, args.interpolate)
     
 
 # execute only if run as a script
