@@ -23,7 +23,8 @@ You can specify multiple output formats, for example "-o png html".
 Set the number of points to calculated with option "-p".
 You can specify to plot only every n'th point with option "-j".
 You can start plotting at a certain index with option "-f".
-You can define a time interval with option "-t" (only available for 3D output)
+You can define a time interval with option "-t" (only available for 3D output).
+Yout can define an interpolation factor.
 ## Help
 Use **-h** or **--help** to show the help text.
 ```
@@ -34,6 +35,7 @@ All arguments are optional except m. This parameter specifies the type of map/fl
 ```
 python3 pystrange.py [-h] [-n NUMBER] [-p POINTS] [-t TIME] [-s STRING]
                     [-o [OUTPUT [OUTPUT ...]]] [-j JUMP] [-f FIRST]
+                    [-i INTERPOLATE]
                     m
 ```
 ## Examples
